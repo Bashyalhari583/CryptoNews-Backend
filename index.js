@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const { fetchAndSaveEvents } = require("./controllers/event.controller");
+const { fetchEventsAndSave } = require("./services/event.service")
 require('dotenv').config();
 
 app.use(cors());
@@ -21,7 +22,8 @@ app.use("/api",eventRoutes);
 setInterval(async () => {
   console.log("Fetching events from CoinMarketCal (auto update)...");
   try {
-    await fetchAndSaveEvents({} , { json: () => {} }); // dummy req/res
+    await fetchEventsAndSave(); // dummy req/res
+    console.log("Events auto-updated successfully");
   } catch (err) {
     console.error("Error auto fetching events:", err.message);
   }
