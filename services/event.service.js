@@ -3,8 +3,10 @@ const { Op } = require("sequelize");
 const { Event } = require("../models");
 require("dotenv").config();
 
-exports.fetchEventsAndSave = async () => {
+exports.fetchEventsAndSave = async (retries = 3, delay = 3000) => {
+  
   console.log("Fetching events from CoinMarketCal API...");
+   for (let i = 0; i < retries; i++) {
   try {
     // Fetch events from CoinMarketCal API
     const response = await axios.get(
@@ -18,6 +20,7 @@ exports.fetchEventsAndSave = async () => {
           limit: 20,
           lang: "en",
         },
+        timeout: 10000, // 10 seconds timeout
       }
     );
     console.log("Full API Response:", response.data);
@@ -60,6 +63,9 @@ exports.fetchEventsAndSave = async () => {
 
     return events;
   } catch (error) {
-    console.error("Error fetching events:", error.message);
+     if (i === retries - 1) throw err;
+      console.warn(`Retrying API... attempt ${i + 1}`);
+      await new Promise((res) => setTimeout(res, delay));
   }
-};
+}
+}
