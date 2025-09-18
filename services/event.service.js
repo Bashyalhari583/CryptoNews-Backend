@@ -92,7 +92,7 @@ exports.fetchEventsAndSave = async (retries = 3, delay = 3000) => {
             limit: 20,
             lang: "en",
           },
-          timeout: 10000, // 10 seconds timeout
+          timeout: 30000, // 30 seconds timeout
         }
       );
 
