@@ -89,7 +89,7 @@ exports.fetchEventsAndSave = async (retries = 3, delay = 3000) => {
             Accept: "application/json",
           },
           params: {
-            limit: 20,
+            limit: 9,
             lang: "en",
           },
           timeout: 30000, // 30 seconds timeout
