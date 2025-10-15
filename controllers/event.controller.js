@@ -1,7 +1,7 @@
 import axios from "axios";
 import dotenv from "dotenv";
 import db from "../models/index.js"; // ESM import
-const { Event } = db; // Destructure Event model
+const { Event } = db;
 import { fetchEventsAndSave } from "../services/event.service.js";
 
 dotenv.config();
